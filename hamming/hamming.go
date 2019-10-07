@@ -2,21 +2,22 @@
 package hamming
 
 import (
-    "errors"
+	"errors"
 )
 
 // Distance takes 2 strings as input and returns the distance for equal length strands.
 func Distance(a, b string) (int, error) {
-	distance := 0
-	err := errors.New("Strands are not of same length")
 
-	if len(a) == len(b) {
-		err = nil
-		for i := 0; i < len(a); i++ {
-			if a[i] != b[i] {
-				distance++
-			}
+	ar, br := []rune(a), []rune(b)
+	if len(ar) != len(br) {
+		return 0, errors.New("strands are not of same length")
+	}
+
+	distance := 0
+	for i := 0; i < len(ar); i++ {
+		if ar[i] != br[i] {
+			distance++
 		}
 	}
-	return distance, err
+	return distance, nil
 }
