@@ -7,10 +7,14 @@ import (
 // Classification defines the class of the integer
 type Classification string
 
-const ClassificationAbundant Classification = "ClassificationAbundant"
-const ClassificationDeficient Classification = "ClassificationDeficient"
-const ClassificationPerfect Classification = "ClassificationPerfect"
+// The type of Classifications
+const (
+	ClassificationAbundant  Classification = "ClassificationAbundant"
+	ClassificationDeficient Classification = "ClassificationDeficient"
+	ClassificationPerfect   Classification = "ClassificationPerfect"
+)
 
+// ErrOnlyPositive when non-positive numbers are added
 var ErrOnlyPositive = errors.New("Not a positve number")
 
 func findFactors(in int64) []int64 {
