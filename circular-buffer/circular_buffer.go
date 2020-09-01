@@ -24,7 +24,8 @@ func NewBuffer(size int) *Buffer {
 func (b *Buffer) ReadByte() (byte, error) {
 	if b.filled > 0 {
 		val := b.content[b.start]
-		b.filled++
+		b.start = (b.start + 1) % len(b.content)
+		b.filled--
 		return val, nil
 	}
 	return byte(0), errors.New("Out of bounds")
@@ -35,16 +36,20 @@ func (b *Buffer) WriteByte(c byte) error {
 	if b.filled == len(b.content) {
 		return errors.New("Buffer is full")
 	}
-	b.filled++
 	idx := (b.start + b.filled) % len(b.content)
+	b.filled++
 	b.content[idx] = c
 	return nil
 }
 
 // Overwrite writes a byte, and overwrites oldest if full
 func (b *Buffer) Overwrite(c byte) {
-	b.filled++
 	idx := (b.start + b.filled) % len(b.content)
+	if b.filled == len(b.content) {
+		b.start = (b.start + 1) % len(b.content)
+	} else {
+		b.filled++
+	}
 	b.content[idx] = c
 }
 
